@@ -1,19 +1,20 @@
-#include <fstream>      // provides ofstream/ifstream for file I/O
+#include <fstream>      // provides ifstream for reading files
 #include <iostream>     // provides cout/cerr for console output
+#include <string>       // provides std::string to store each line
 
 int main() {
-    std::ofstream outputFile("message.txt");   // open (create) message.txt for writing
-    if (!outputFile) {                         // check if file failed to open
-        std::cerr << "Error: Could not create message.txt\n";
+    std::ifstream inputFile("message.txt");    // open message.txt for reading
+    if (!inputFile) {                          // check if file failed to open
+        std::cerr << "Error: Could not open message.txt\n";
         return 1;                              // exit with error code
     }
 
-    outputFile << "Welcome to C++ File Handling\n";        // write line 1
-    outputFile << "This is the first line written to a file.\n"; // write line 2
-    outputFile << "Files store data permanently.\n";       // write line 3
+    std::string line;                          // holds one line at a time
+    std::cout << "File Content:\n";
+    while (std::getline(inputFile, line)) {    // read until end of file
+        std::cout << line << '\n';             // print the line to console
+    }
 
-    outputFile.close();                        // close the file, flush data to disk
-
-    std::cout << "Data written successfully to message.txt\n"; // confirm on console
+    inputFile.close();                         // close the file after reading
     return 0;
 }
